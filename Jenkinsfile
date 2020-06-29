@@ -1,17 +1,46 @@
 pipeline {
   agent any
   stages {
-    stage('build') {
+    stage('mystage1') {
       steps {
         bat(script: 'echo \'hi proj strtd\'', returnStatus: true, returnStdout: true)
       }
     }
 
-    stage('maveb  build') {
+    stage('mystage2') {
       steps {
-        build 'buildproj'
+        input('do u wanna proceed further?')
       }
     }
-
-  }
+            stage('Three') {
+                 when {
+                       not {
+                            branch "master"
+                       }
+                 }
+                 steps {
+                       echo "Hello"
+                 }
+                 }
+                 stage('dockerFour') {
+                 parallel { 
+                            stage('Unit Test') {
+                           steps {
+                                echo "Running the unit test..."
+                           }
+                           }
+                            stage('Integration test') {
+                              agent {
+                                    docker {
+                                            reuseNode true
+                                            image 'ubuntu'
+                                           }
+                                    }
+                              steps {
+                                echo "Running the integration test..."
+                              }
+                           }
+                           }
+                           }
+              }
 }
