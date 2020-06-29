@@ -9,7 +9,7 @@ pipeline {
 
     stage('maveb  build') {
       steps {
-        build 'buildjob'
+        build 'buildproj'
       }
     }
 
