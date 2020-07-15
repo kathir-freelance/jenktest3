@@ -4,7 +4,11 @@ node {
 
    // Checkout code from repository
    checkout scm
-
+// Get the maven tool.
+   // ** NOTE: This 'M3' maven tool must be configured
+   // **       in the global configuration.
+   def mvnHome = tool 'my_mvn'
+   
    // Mark the code build 'stage'....
    stage 'Build'
    // Run the maven build
