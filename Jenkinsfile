@@ -1,46 +1,17 @@
-pipeline {
-  agent any
-  stages {
-    stage('mystage1') {
-      steps {
-        bat(script: 'echo \'hi proj strtd\'', returnStatus: true, returnStdout: true)
-      }
-    }
+node {
+   // Mark the code checkout 'stage'....
+   stage 'Checkout'
 
-    stage('mystage2') {
-      steps {
-        input('do u wanna proceed further?')
-      }
-    }
-            stage('Three') {
-                 when {
-                       not {
-                            branch "master"
-                       }
-                 }
-                 steps {
-                       echo "Hello"
-                 }
-                 }
-                 stage('dockerFour') {
-                 parallel { 
-                            stage('Unit Test') {
-                           steps {
-                                echo "Running the unit test..."
-                           }
-                           }
-                            stage('Integration test') {
-                              agent {
-                                    docker {
-                                            reuseNode true
-                                            image 'ubuntu'
-                                           }
-                                    }
-                              steps {
-                                echo "Running the integration test..."
-                              }
-                           }
-                           }
-                           }
-              }
+   // Checkout code from repository
+   checkout scm
+
+   // Get the maven tool.
+   // ** NOTE: This 'M3' maven tool must be configured
+   // **       in the global configuration.
+   def mvnHome = tool 'my_mvn'
+
+   // Mark the code build 'stage'....
+   stage 'Build'
+   // Run the maven build
+   sh "${mvnHome}/bin/mvn clean install"
 }
