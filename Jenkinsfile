@@ -10,7 +10,7 @@ bat'mvn clean compile'
 }
 stage ('Testing Stage') {
 steps {
-withMaven(maven : 'my_mvn' {
+withMaven(maven : 'my_mvn') {
 bat'mvn test'
 }
 }
