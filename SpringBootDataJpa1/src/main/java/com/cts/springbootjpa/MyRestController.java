@@ -16,7 +16,7 @@ public class MyRestController {
 	@RequestMapping("getAll")
 	public List<Person> getAll(){
 		System.out.println("testing");
-		System.out.println("testing-5");
+		System.out.println("testing-6");
 		return service.getAllPersons();
 	}
 }
